@@ -53,23 +53,35 @@ exports.removeDog = async (req, res) => {
   }
 };
 
-// Controller to list dogs registered by the user
+// Controller to list dogs registered by the user (with pagination)
 exports.listRegisteredDogs = async (req, res) => {
   try {
     const userId = req.user.id;
-    const dogs = await Dog.find({ owner: userId });
-    res.json({ dogs });
+    // Extract page and limit from query parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Query dogs for user with pagination
+    const dogs = await Dog.find({ owner: userId }).skip(skip).limit(limit);
+    res.json({ dogs, page, limit });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
 };
 
-// Controller to list dogs adopted by the user
+// Controller to list dogs adopted by the user (with pagination)
 exports.listAdoptedDogs = async (req, res) => {
   try {
     const userId = req.user.id;
-    const dogs = await Dog.find({ adoptedBy: userId });
-    res.json({ dogs });
+    // Extract page and limit from query parameters
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 10;
+    const skip = (page - 1) * limit;
+
+    // Query dogs for the user with pagination
+    const dogs = await Dog.find({ adoptedBy: userId }).skip(skip).limit(limit);
+    res.json({ dogs, page, limit });
   } catch (err) {
     res.status(400).json({ error: err.message });
   }
