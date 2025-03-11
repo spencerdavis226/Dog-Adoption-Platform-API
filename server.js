@@ -4,8 +4,14 @@ const mongoose = require('mongoose');
 const app = express();
 const port = process.env.port || 5000;
 
+// Routes
+const userRoutes = require('./routes/userRoutes');
+const dogRoutes = require('./routes/dogRoutes');
+
 // Middleware
 app.use(express.json());
+app.use('/api/users', userRoutes);
+app.use('/api/dogs', dogRoutes);
 
 // Connect to MongoDB using connection string from .env
 mongoose
