@@ -85,7 +85,7 @@ Ensure your MongoDB instance is running before executing tests. The tests cover 
 - routes/: Defines API routes mapped to controllers.
 - middleware/: Contains middleware such as authentication.
 - test/: Contains test files for API endpoints.
-- server.js (or app.js): Entry point of the application.
+- server.js: Entry point of the application.
 - .env: Environment configuration (not committed to GitHub).
 
 ## Contributing
